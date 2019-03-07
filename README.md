@@ -1,14 +1,7 @@
 # megararss2cube
 
 Megararss2cube is a tool to convert MEGARA LCB reduced dataproducts from the RSS format obtained with [megaradrp](https://github.com/guaix-ucm/megaradrp) to a more user-friendly 3d datacube. Megararss2cube is based on the E3D format converter, 
-[e3d2cube.py](http://ifs.wdfiles.com/local--files/da-exploring/e3d2cube.py), mentioned in [http://ifs.wikidot.com/da-exploring](http://ifs.wikidot.com/da-exploring)
-
-### Install
-
-Download the [source code](https://github.com/javierzaragoza/megararss2cube/archive/master.zip) and extract it. Then:
-
-    python setup.py install
-
+[e3d2cube.py](http://ifs.wdfiles.com/local--files/da-exploring/e3d2cube.py), mentioned in [http://ifs.wikidot.com/da-exploring](http://ifs.wikidot.com/da-exploring).
 
 ### Dependencies
 
@@ -16,6 +9,15 @@ scipy
 astropy
 numpy
 megaradrp
+
+### Install
+
+
+Download the [source code](https://github.com/javierzaragoza/megararss2cube/archive/master.zip) and extract it. 
+Write the setup command from a terminal, on the root directory where you extracted the repository:
+
+    python setup.py install
+
 
 ### Usage
 
