@@ -1,6 +1,7 @@
 # megararss2cube
 
-Megararss2cube is a tool to convert MEGARA LCB reduced dataproducts from the RSS format obtained with [megaradrp](https://github.com/guaix-ucm/megaradrp) to a more user-friendly 3d datacube. 
+Megararss2cube is a tool to convert MEGARA LCB reduced dataproducts from the RSS format obtained with [megaradrp](https://github.com/guaix-ucm/megaradrp) to a more user-friendly 3d datacube. Megararss2cube is based on the E3D format converter, 
+[e3d2cube.py](http://ifs.wdfiles.com/local--files/da-exploring/e3d2cube.py), mentioned in [http://ifs.wikidot.com/da-exploring](http://ifs.wikidot.com/da-exploring)
 
 ### Install
 
