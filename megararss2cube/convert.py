@@ -161,22 +161,13 @@ def convert(infile,arcsec_per_pixel=0.2,sigma_conv=8.,expansion_factor=5,writeou
     cube_rebin.data = numpy.zeros( (Nw,Ny/nbin,Nx/nbin) )
     print('')
     print('2nd step')
-    for i in range( 0, Nwspec) :
-        
-     shape=cube.data[i].shape
-
-     rebin_data=numpy.zeros((shape[0]/nbin,shape[1]/nbin))
-
+    for i in range( 0, Nwspec) :        
+     shape=cube.data[i].shape    
      print(str(i)+'/'+str(Nwspec)+' spectral channels',end="\r")
      for xi in numpy.arange(0,shape[0],nbin)[:-1]:
          for yj in numpy.arange(0,shape[1],nbin)[:-1]:
-             pixel_ij=numpy.sum(cube.data[i][xi:xi+nbin,yj:yj+nbin])
-             rebin_data[xi/nbin,yj/nbin]=pixel_ij
-     cube_rebin.data[i]=rebin_data
-
+             pixel_ij=numpy.sum(cube.data[i][xi:xi+nbin,yj:yj+nbin])             
+             cube_rebin.data[i][xi/nbin,yj/nbin]=pixel_ij     
     if writeout !=None:
         cube_rebin.writeto(writeout,overwrite=overwrite)
-
-
-
     return( cube_rebin)
