@@ -24,7 +24,8 @@ Write the setup command from a terminal, on the root directory where you extract
     import megararss2cube
     #convert a rss fits dataproduct 'rss_product.fits' to a cube hdulist
     #optionally, if writeout is defined, it writes the cube product to 'cube_product.fits'
-    cube=megararss2cube.convert('rss_product.fits',writeout='cube_product.fits')
+    #arcsec_per_pixel is the dersired pixel size in arcsec, by default is 0.2 
+    cube=megararss2cube.convert('rss_product.fits',writeout='cube_product.fits',arcsec_per_pixel=0.2)
 
 ### Contact
 
