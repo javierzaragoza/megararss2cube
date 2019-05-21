@@ -22,7 +22,7 @@ def convert(infile,arcsec_per_pixel=0.2,sigma_conv=8.,expansion_factor=5,writeou
     Modify it by your own risk. sigma_conv~sqrt(3)*expansion_factor
     writeout: string. filename of the fits output. By default the output fits is not written. 
     overwrite: bool. 
-    keepunits: bool. False by default, so if False it converts from Jy to erg/s/cm**2/AA
+    keep_units: bool. False by default, so if False it converts from Jy to erg/s/cm**2/AA
     
     usage -> 
     ----------------
