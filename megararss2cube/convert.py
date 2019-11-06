@@ -122,25 +122,28 @@ def convert(infile,arcsec_per_pixel=0.2,sigma_conv=8.,expansion_factor=5,writeou
            end_sp=Nw
            start_sp=1   
            print('Warning! FIB'+fib_str+'W1 and W2 information missing in header. Assuming default wavelength coverage.') 
-
-        spec = data[ispec][:]
-        Nwspec = Nw    
-
-        xpos = (phdr['FIB'+fib_str+'_x']+5.)*PLATESCALE  
-        ypos = (phdr['FIB'+fib_str+'_y']+5.)*PLATESCALE
-        ix = int( round((xpos - x0),3) / dx  )
-        iy = int( round((ypos - y0),3) / dy  )
-
-        lambda_arr=w0+dw*numpy.arange(0,Nwspec,1)
         
-        if keep_units==True:
-         for i in range( start_sp, min(end_sp,Nwspec) ):
-            cube.data[i][iy][ix] = spec[i]##same units 
+        if end_sp!=start_sp:
+         spec = data[ispec][:]
+         Nwspec = Nw    
+         
+         xpos = (phdr['FIB'+fib_str+'_x']+5.)*PLATESCALE  
+         ypos = (phdr['FIB'+fib_str+'_y']+5.)*PLATESCALE
+         ix = int( round((xpos - x0),3) / dx  )
+         iy = int( round((ypos - y0),3) / dy  )
+         
+         lambda_arr=w0+dw*numpy.arange(0,Nwspec,1)
+         
+         if keep_units==True:
+          for i in range( start_sp, min(end_sp,Nwspec) ):
+             cube.data[i][iy][ix] = spec[i]##same units 
+         else:
+          for i in range( start_sp, min(end_sp,Nwspec) ):
+             cube.data[i][iy][ix] = spec[i]*3.00e-5/lambda_arr[i]**2 ## Jy to erg/s/cm**2/A  
         else:
-         for i in range( start_sp, min(end_sp,Nwspec) ):
-            cube.data[i][iy][ix] = spec[i]*3.00e-5/lambda_arr[i]**2 ## Jy to erg/s/cm**2/A            
-    print('1st step')   
-    for i in range( start_sp, min(end_sp,Nwspec) ):
+         end_sp=Nwspec   
+    print('1st step')  
+    for i in range( start_sp, min(end_sp,Nwspec)):
         print(str(i)+'/'+str(Nwspec)+' spectral channels',end="\r")
         cube.data[i]=scipy.ndimage.filters.gaussian_filter(cube.data[i], sigma=sigma_conv)
     
