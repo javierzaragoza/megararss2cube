@@ -6,7 +6,7 @@ import numpy
 import megaradrp.datamodel as dm 
 from .getspaxdim import getspaxdim
 
-def convert(infile,arcsec_per_pixel=0.2,sigma_conv=8.,expansion_factor=5,writeout=None,overwrite=False,keep_units=False):
+def convert(infile,arcsec_per_pixel=0.2,sigma_conv=1.,expansion_factor=5,writeout=None,overwrite=False,keep_units=False):
     """ 
     Convert a MEGARA fits RSS file format 
     to a traditional IFU fits data cube (3-d data array)
@@ -16,8 +16,7 @@ def convert(infile,arcsec_per_pixel=0.2,sigma_conv=8.,expansion_factor=5,writeou
     
     
     arcsec_per_pixel: float, desired arcsec per pixel. It will find the closest arcsec_per_pixel of your input, but not exact
-    sigma_conv: float. By default is 8. This parameter is the sigma of the gaussian convolution used to populate the square-pixels around 
-    the center of each hexagon. Modify it by your own risk!
+    sigma_conv: float. By default is 1 arcsec. This parameter is the sigma in arcsecs of the gaussian convolution used to populate the square-pixels around 
     expansion_factor: integer. By default is 5. The expansion of NAXIS2 to decrease the effect of irrational factor of the xy-sampling. 
     Modify it by your own risk. sigma_conv~sqrt(3)*expansion_factor
     writeout: string. filename of the fits output. By default the output fits is not written. 
@@ -143,9 +142,10 @@ def convert(infile,arcsec_per_pixel=0.2,sigma_conv=8.,expansion_factor=5,writeou
         else:
          end_sp=Nwspec   
     print('1st step')  
+    sigma_conv_pix=sigma_conv/((dx*nbin)/expansion_factor)   
     for i in range( start_sp, min(end_sp,Nwspec)):
         print(str(i)+'/'+str(Nwspec)+' spectral channels',end="\r")
-        cube.data[i]=scipy.ndimage.filters.gaussian_filter(cube.data[i], sigma=sigma_conv)
+        cube.data[i]=scipy.ndimage.filters.gaussian_filter(cube.data[i], sigma=sigma_conv_pix)
     
     
     cube_rebin = fits.PrimaryHDU()
