@@ -1,8 +1,11 @@
 
 from __future__ import print_function
-import scipy.ndimage
+#import scipy.ndimage
 from astropy.io import fits 
 import numpy
+from astropy.convolution import Tophat2DKernel
+from astropy.convolution import Gaussian2DKernel
+from astropy.convolution import convolve
 import megaradrp.datamodel as dm 
 from .getspaxdim import getspaxdim
 
@@ -141,11 +144,18 @@ def convert(infile,arcsec_per_pixel=0.2,sigma_conv=1.,expansion_factor=5,writeou
              cube.data[i][iy][ix] = spec[i]*3.00e-5/lambda_arr[i]**2 ## Jy to erg/s/cm**2/A  
         else:
          end_sp=Nwspec   
+    sigma_conv_pix=sigma_conv/((dx*nbin)/expansion_factor)   
+    kernel = Gaussian2DKernel(x_stddev=sigma_conv_pix)          
     print('1st step')  
     sigma_conv_pix=sigma_conv/((dx*nbin)/expansion_factor)   
     for i in range( start_sp, min(end_sp,Nwspec)):
         print(str(i)+'/'+str(Nwspec)+' spectral channels',end="\r")
-        cube.data[i]=scipy.ndimage.filters.gaussian_filter(cube.data[i], sigma=sigma_conv_pix)
+
+
+
+        cube.data[i]=convolve(cube.data[i], kernel,boundary='extend',normalize_kernel=True)
+       
+
     
     
     cube_rebin = fits.PrimaryHDU()
