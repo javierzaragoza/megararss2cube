@@ -147,12 +147,15 @@ def convert(infile,arcsec_per_pixel=0.2,sigma_conv=1.,expansion_factor=5,writeou
     sigma_conv_pix=sigma_conv/((dx*nbin)/expansion_factor)   
     kernel = Gaussian2DKernel(x_stddev=sigma_conv_pix)          
     print('1st step')  
+    sigma_conv_pix=sigma_conv/((dx*nbin)/expansion_factor)   
     for i in range( start_sp, min(end_sp,Nwspec)):
         print(str(i)+'/'+str(Nwspec)+' spectral channels',end="\r")
 
 
+
         cube.data[i]=convolve(cube.data[i], kernel,boundary='extend',normalize_kernel=True)
        
+
     
     
     cube_rebin = fits.PrimaryHDU()
